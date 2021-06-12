@@ -1,27 +1,28 @@
 import request from 'supertest'
 import app from './server'
+import db from './database/db'
 
-describe('Api testing', () => {
-  it('should return status 200', async () => {
+beforeAll(async () => await db.connect())
+afterEach(async () => await db.clearDatabase())
+
+describe('User route testing', () => {
+  it('should create user', async () => {
     const res = await request(app)
     .post("/user")
     .send({
-      name: "nogw"
+      name: "nogw",
+      email: "nogw@gmail.com"
     })
 
-    expect(res.statusCode).toEqual(200)
+    expect(res.statusCode).toEqual(201)
     expect(res.body).toHaveProperty("message")
   })
 
-  it('should return number multiply p 2', async () => {
+  it('should return list of users', async () => {
     const res = await request(app)
-    .post("/add")
-    .send({
-      num: 2
-    })
+    .get("/user")
 
     expect(res.statusCode).toEqual(200)
     expect(res.body).toHaveProperty("message")
-    expect(res.body.message).toEqual(4)
   })
 })
