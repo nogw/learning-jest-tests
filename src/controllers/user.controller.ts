@@ -1,9 +1,9 @@
 import { Request, Response } from 'express'
 
-import User from '../models/user.model'
+import User, { IUser } from '../models/user.model'
 import validateUser from '../validation/user.validation'
 
-const postNewUser = async (req: Request, res: Response) => {
+const postCreateUser = async (req: Request, res: Response) => {
   const { errors, isValid } = validateUser(req.body) 
 
   if (!isValid) {
@@ -27,12 +27,12 @@ const postNewUser = async (req: Request, res: Response) => {
     })
 
     user.save()
-    .then((user: any) => {
+    .then((user: IUser) => {
       return res.status(201).json({
         message: "user created"
       })
     })
-    .catch((error: any) => {
+    .catch((error: Error) => {
       return res.status(400).json({
         error: error
       })
@@ -66,6 +66,6 @@ const getUsers = async (req: Request, res: Response) => {
 }
 
 export default {
-  postNewUser, 
+  postCreateUser, 
   getUsers
 }
