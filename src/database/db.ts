@@ -1,4 +1,4 @@
-import mongoose from 'mongoose'
+import mongoose, { CollectionBase }  from 'mongoose'
 
 const connectDb = async () => {
   const databaseMongoUri = process.env.MONGO_URI

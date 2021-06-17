@@ -28,12 +28,15 @@ const postCreateUser = async (req: Request, res: Response) => {
 
     try {
       await user.save()
+
+      return res.status(201).json({
+        message: "user created"
+      })
     } catch (error) {
       return res.status(400).json({
         error: error
       })
     }
-    
   } catch (error) {
     return res.status(400).json({
       error: error
@@ -46,7 +49,7 @@ const getUsers = async (req: Request, res: Response) => {
     let users = User.find({}).exec()
 
     if (users.length < 1) {
-      return res.status(400).json({
+      return res.status(404).json({
         error: "no registered user"
       })
     }
