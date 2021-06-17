@@ -26,17 +26,14 @@ const postCreateUser = async (req: Request, res: Response) => {
       name: req.body.name
     })
 
-    user.save()
-    .then((user: IUser) => {
-      return res.status(201).json({
-        message: "user created"
-      })
-    })
-    .catch((error: Error) => {
+    try {
+      await user.save()
+    } catch (error) {
       return res.status(400).json({
         error: error
       })
-    })
+    }
+    
   } catch (error) {
     return res.status(400).json({
       error: error
@@ -50,14 +47,13 @@ const getUsers = async (req: Request, res: Response) => {
 
     if (users.length < 1) {
       return res.status(400).json({
-        error: "0 users"
+        error: "no registered user"
       })
     }
 
     return res.status(200).json({
       message: users
     })
-
   } catch (error) {
     return res.status(400).json({
       error: error

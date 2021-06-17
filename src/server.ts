@@ -9,7 +9,7 @@ import db from './database/db'
 const app = express()
 const port = 8080
 
-db.connect
+db.connectDb()
 
 app.use(express.json())
 app.use("/", router)

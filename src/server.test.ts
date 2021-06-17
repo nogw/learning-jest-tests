@@ -2,8 +2,8 @@ import request from 'supertest'
 import app from './server'
 import db from './database/db'
 
-beforeAll(async () => await db.connect())
-afterEach(async () => await db.clearDatabase())
+beforeAll(async () => await db.connectDb())
+afterEach(async () => await db.clearDb())
 
 describe('User route testing', () => {
   it('should create user', async () => {
